@@ -1,0 +1,117 @@
+// Place all the styles related to the Review controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  color: #252a2e;
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 500;
+  padding: 30px 60px;
+  display: flex;
+  justify-content: center;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+.ratingContainer {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.ratingNumber {
+  font-size: 34px;
+  font-weight: 300;
+}
+
+.iconContainer {
+  margin-left: 16px;
+  height: 26px;
+  flex-grow: 1;
+}
+
+.icon {
+  height: 100%;
+  width: 140px;
+}
+
+.separator {
+  margin: 40px 0;
+  border: 0;
+  border-bottom: 1px solid #cdcdcd;
+}
+
+.reviewContainer {
+  display: flex;
+}
+
+.reviewIcon {
+  height: 26px;
+  width: 140px;
+  margin-right: 16px;
+}
+.reviewRating {
+  margin-left: 8px;
+}
+
+.reviewContent {
+  color: #555;
+  font-weight: 300;
+}
+.modalIconContainer {
+  display: flex;
+}
+
+.modal {
+  padding-bottom: 30px !important; 
+  h1 {
+    font-size: 30px;
+  }
+  h2 {
+    font-size: 20px;
+    font-weight: 400;
+  }
+}
+
+.modalIcon {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.button {
+  background: transparent;
+  border-radius: 4px;
+  border: 1px solid #cdcdcd;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+  padding: 10px 18px;
+  color: #555;
+  text-decoration: none;
+  font-size: 13px;
+  &:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+.reviewRatingInput {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.reviewBodyInput {
+  border: 0;
+  width: 100%;
+  min-height: 80px;
+  outline: none;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
