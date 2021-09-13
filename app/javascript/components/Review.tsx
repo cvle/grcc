@@ -56,7 +56,7 @@ const Review: React.FC<Props> = ({ rating, reviews, authenticityToken }) => {
 
   return (
     <ActionCableProvider
-      url={`${location.protocol === "https" ? "wss" : "ws"}://${
+      url={`${location.protocol === "https:" ? "wss" : "ws"}://${
         location.host
       }/cable`}
     >
