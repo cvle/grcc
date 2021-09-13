@@ -1,5 +1,6 @@
 import React, { FormEvent, useCallback, useRef, useState } from "react";
 import Modal from "react-modal";
+import Button from "./Button";
 import Star from "./Star";
 
 export interface SuccessData {
@@ -137,9 +138,9 @@ const ReviewModal: React.FC<Props> = ({
             name="authenticity_token"
             value={authenticityToken}
           />
-          <button className="button" type="submit">
+          <Button type="submit">
             Submit review
-          </button>
+          </Button>
         </div>
       </form>
     </Modal>

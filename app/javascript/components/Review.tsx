@@ -2,6 +2,7 @@ import React, { useCallback, useState } from "react";
 import ReviewModal, { SuccessData } from "./ReviewModal";
 import StarRating from "./StarRating";
 import { ActionCableProvider, ActionCableConsumer } from "react-actioncable-provider";
+import Button from "./Button";
 
 
 type ReviewsData = Array<{
@@ -60,9 +61,9 @@ const Review: React.FC<Props> = ({ rating, reviews, authenticityToken }) => {
               <StarRating rating={ratingNumber} />
             </div>
             <div>
-              <button className="button" onClick={openModal}>
+              <Button onClick={openModal}>
                 Add review
-              </button>
+              </Button>
             </div>
           </div>
           <hr className="separator" />
