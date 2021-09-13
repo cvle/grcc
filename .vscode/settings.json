@@ -9,6 +9,16 @@
             "database": "postgres",
             "username": "postgres",
             "password": "mysecretpassword"
+        },
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "gr_code_challenge",
+            "database": "gr_code_challenge_development",
+            "username": "gr_code_challenge",
+            "password": "gr_code_challenge"
         }
     ]
 }
