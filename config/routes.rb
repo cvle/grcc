@@ -4,4 +4,6 @@ Rails.application.routes.draw do
   get "/review", to: "review#index"
   get "/2.0/", to: "review2#index"
   post "/2.0/", to: "review2#create"
+
+  mount ActionCable.server => "/cable"
 end

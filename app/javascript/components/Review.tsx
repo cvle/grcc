@@ -1,6 +1,8 @@
 import React, { useCallback, useState } from "react";
 import ReviewModal, { SuccessData } from "./ReviewModal";
 import StarRating from "./StarRating";
+import { ActionCableProvider, ActionCableConsumer } from "react-actioncable-provider";
+
 
 type ReviewsData = Array<{
   rating: string;
@@ -27,14 +29,22 @@ const Review: React.FC<Props> = ({ rating, reviews, authenticityToken }) => {
   }, []);
   const handleCreateReviewSuccess = useCallback((newReview: SuccessData) => {
     setModalOpen(false);
-    // Add new item to the reviews.
-    setReviewsData((oldData) => [...oldData, newReview]);
+    // No need to add newReview, because it comes through the websocket connection.
+  }, []);
+
+  // Handle live data through websocket connection.
+  const handleReceivedCreateReview = useCallback((data) => {
+    setReviewsData((oldData) => [...oldData, data]);
   }, []);
 
   const ratingNumber = Number.parseFloat(rating);
 
   return (
-    <>
+    <ActionCableProvider url={`ws://${location.host}/cable`}>
+      <ActionCableConsumer
+        channel="ReviewsChannel"
+        onReceived={handleReceivedCreateReview}
+      />
       <ReviewModal
         onSuccess={handleCreateReviewSuccess}
         authenticityToken={authenticityToken}
@@ -75,7 +85,7 @@ const Review: React.FC<Props> = ({ rating, reviews, authenticityToken }) => {
           </div>
         </div>
       </div>
-    </>
+    </ActionCableProvider>
   );
 };
 

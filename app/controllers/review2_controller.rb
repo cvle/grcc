@@ -7,6 +7,7 @@ class Review2Controller < ApplicationController
   def create
     @review = Review.new(review_params)
     if @review.save
+      ActionCable.server.broadcast "reviews_channel", @review
       self.index
       render :index
     else
