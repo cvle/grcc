@@ -22,7 +22,7 @@ interface Props {
 
 const Review: React.FC<Props> = ({ rating, reviews, authenticityToken }) => {
   const [reviewsData, setReviewsData] = useState<ReviewsDataArray>(reviews);
-  const [ratingData, setRatingData] = useState<string>(rating || "0");
+  const [ratingData, setRatingData] = useState<string>(rating);
 
   // Modal handlers
   const [isModalOpen, setModalOpen] = useState(false);

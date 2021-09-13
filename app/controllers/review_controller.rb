@@ -1,7 +1,11 @@
 class ReviewController < ApplicationController
   def index
     @reviews = Review.all.reverse
-    @rating = @reviews.inject(0.0) { |sum, el| sum + el.rating } / @reviews.size
+    if @reviews.size > 0
+      @rating = @reviews.inject(0.0) { |sum, el| sum + el.rating } / @reviews.size
+    else
+      @rating = 0
+    end
   end
 
   def create
