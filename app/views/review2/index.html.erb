@@ -1,7 +1,3 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
-
 <!-- Some predefined svg star symbols !-->
 <svg id="stars" style="display: none;" version="1.1">
   <symbol id="stars-full-star">
@@ -85,80 +81,4 @@
   </symbol>
 </svg>
 
-<div>
-  <h1>The Minimalist Entrepreneur</h1>
-  <div>
-    <div class="ratingContainer">
-      <div class="ratingNumber"><%= "#{'%.1f' % @rating}" %></div>
-      <div class="iconContainer">
-        <svg class="icon">
-          <use xlink:href="#stars-<%= @rating.round %>-0-star">
-        </svg>
-      </div>
-      <div>
-        <a class="button" href="#ex1" rel="modal:open">Add review</a>
-      </div>
-    </div>
-    <hr class="separator" />
-    <div>
-      <h2>Reviews</h2>
-      <% @reviews.each do |review| %>
-        <div class="reviewContainer">
-          <div>
-            <svg class="reviewIcon">
-              <use xlink:href="#stars-<%= review.rating.to_i %>-0-star">
-            </svg>
-          </div>
-          <div class="reviewRating"><%= review.rating.to_i %></div>
-          <div class="reviewContent">, <%= review.body %></div>
-        </div>
-      <% end %>
-    </div>
-  </div>
-</div>
-
-<div id="ex1" class="modal">
-  <script>
-    function setRating(rating) {
-      var container = document.getElementById('modalIconContainer');
-      for (var i=0; i < container.children.length; i++) {
-        var child = container.children[i];
-        var href = i <= rating - 1 ? '#stars-filled-full-star' : '#stars-empty-full-star';
-        child.firstElementChild.setAttribute('xlink:href', href);
-      }
-      document.getElementById('reviewRatingInput').value = rating;
-    }
-  </script>
-  <form action="" method="post">
-    <h1>What's your rating?</h1>
-    <section>
-      <h2>Rating<h2>
-      <div id="modalIconContainer" class="modalIconContainer">
-        <svg class="modalIcon" onclick="javascript:setRating(1)">
-          <use xlink:href="#stars-empty-full-star">
-        </svg>
-        <svg class="modalIcon" onclick="javascript:setRating(2)">
-          <use xlink:href="#stars-empty-full-star">
-        </svg>
-        <svg class="modalIcon" onclick="javascript:setRating(3)">
-          <use xlink:href="#stars-empty-full-star">
-        </svg>
-        <svg class="modalIcon" onclick="javascript:setRating(4)">
-          <use xlink:href="#stars-empty-full-star">
-        </svg>
-        <svg class="modalIcon" onclick="javascript:setRating(5)">
-          <use xlink:href="#stars-empty-full-star">
-        </svg>
-      </div>
-      <input class="reviewRatingInput" type="text" name="review[rating]" id="reviewRatingInput" required />
-    </section>
-    <section>
-      <h2>Review<h2>
-      <textarea name="review[body]" class="reviewBodyInput" placeholder="Start typing..." required></textarea>
-    </section>
-    <div>
-      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-      <button class="button" type="submit">Submit review</a>
-    </div>
-  </form>
-</div>
+<%= react_component("Review", { rating: @rating, reviews: @reviews, authenticityToken: form_authenticity_token }) %>
