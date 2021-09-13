@@ -46,12 +46,33 @@ const ReviewModal: React.FC<Props> = ({
   const ratingInputRef = useRef<HTMLInputElement>();
 
   /** Star click handler, that sets rating state and syncs it to the input value */
-  const handleStarClick = useCallback((value: number) => {
-    setRating(value);
-    if (ratingInputRef.current) {
-      ratingInputRef.current.value = value.toString();
-    }
-  }, []);
+  const handleStarClick = useCallback(
+    (event: React.MouseEvent, value: number) => {
+      /** Actual value that we will dermine below */
+      let actualValue: number;
+      const clickTarget = (event.currentTarget as HTMLElement)
+        .parentNode as HTMLElement;
+      console.log(clickTarget.offsetWidth);
+      const clickTargetWidth = clickTarget.offsetWidth;
+      const xCoordInClickTarget =
+        event.clientX - clickTarget.getBoundingClientRect().left;
+      if (clickTargetWidth / 2 > xCoordInClickTarget) {
+        // clicked left, so we only give 0.5 points instead of a full one.
+        actualValue = value - 0.5;
+      } else {
+        // clicked right, give full value.
+        actualValue = value;
+      }
+
+      setRating(actualValue);
+
+      // Sync with form input.
+      if (ratingInputRef.current) {
+        ratingInputRef.current.value = actualValue.toString();
+      }
+    },
+    []
+  );
 
   /** Handle form submit */
   const handleSubmit = useCallback(async (e: FormEvent<HTMLFormElement>) => {
@@ -82,36 +103,24 @@ const ReviewModal: React.FC<Props> = ({
         <section>
           <h2>Rating</h2>
           <div id="modalIconContainer" className="modalIconContainer">
-            <Star
-              variant={rating > 0 ? "full" : "empty"}
-              onClick={() => {
-                handleStarClick(1);
-              }}
-            />
-            <Star
-              variant={rating > 1 ? "full" : "empty"}
-              onClick={() => {
-                handleStarClick(2);
-              }}
-            />
-            <Star
-              variant={rating > 2 ? "full" : "empty"}
-              onClick={() => {
-                handleStarClick(3);
-              }}
-            />
-            <Star
-              variant={rating > 3 ? "full" : "empty"}
-              onClick={() => {
-                handleStarClick(4);
-              }}
-            />
-            <Star
-              variant={rating > 4 ? "full" : "empty"}
-              onClick={() => {
-                handleStarClick(5);
-              }}
-            />
+            {Array.from(Array(5).keys()).map((i) => {
+              let variant: "full" | "empty" | "half" = "full";
+              if (rating <= i) {
+                variant = "empty";
+              } else if(Math.trunc(rating) <= i && rating % 1 === 0.5) {
+                variant = "half";
+              }
+              return (
+                <div key={i}>
+                  <Star
+                    variant={variant}
+                    onClick={(e) => {
+                      handleStarClick(e, i + 1);
+                    }}
+                  />
+                </div>
+              );
+            })}
           </div>
           <input
             ref={ratingInputRef}
@@ -138,9 +147,7 @@ const ReviewModal: React.FC<Props> = ({
             name="authenticity_token"
             value={authenticityToken}
           />
-          <Button type="submit">
-            Submit review
-          </Button>
+          <Button type="submit">Submit review</Button>
         </div>
       </form>
     </Modal>
