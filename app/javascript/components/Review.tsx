@@ -55,7 +55,11 @@ const Review: React.FC<Props> = ({ rating, reviews, authenticityToken }) => {
   const ratingNumber = Number.parseFloat(ratingData);
 
   return (
-    <ActionCableProvider url={`ws://${location.host}/cable`}>
+    <ActionCableProvider
+      url={`${location.protocol === "https" ? "wss" : "ws"}://${
+        location.host
+      }/cable`}
+    >
       <ActionCableConsumer
         channel="ReviewsChannel"
         onReceived={handleReceivedCreateReview}
