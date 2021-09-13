@@ -34,7 +34,7 @@ const Review: React.FC<Props> = ({ rating, reviews, authenticityToken }) => {
 
   // Handle live data through websocket connection.
   const handleReceivedCreateReview = useCallback((data) => {
-    setReviewsData((oldData) => [...oldData, data]);
+    setReviewsData((oldData) => [data, ...oldData]);
   }, []);
 
   const ratingNumber = Number.parseFloat(rating);

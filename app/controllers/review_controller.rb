@@ -1,6 +1,6 @@
 class ReviewController < ApplicationController
   def index
-    @reviews = Review.all
+    @reviews = Review.all.reverse
     @rating = @reviews.inject(0.0) { |sum, el| sum + el.rating } / @reviews.size
   end
 
